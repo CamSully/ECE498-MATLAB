@@ -1,3 +1,6 @@
+% ECE 498 - Cameron Sullivan - HW1 pmarray.m
+% Code originally written by Prof. Hanselman.
+
 function out=pmarray(m,n,k,alg)
 %PMARRAY Array Containing Alternating Plus and Minus K.
 % PMARRAY(M,N,K,ALG) produces an M-by-N array of plus and minus K values
