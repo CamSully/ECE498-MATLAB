@@ -34,14 +34,32 @@ function out=factors(N)
 %     
 % end
 
-K = 1:N;
-D = K(rem(N,K) == 0)
-E = fliplr(D)
-if rem(length(D),2) == 0 
-    F = D(1:length(D)/2)
-    G = E(1:length(E)/2)
-else
-    F = D(1:(length(D)/2 + 1))
-    G = E(1:(length(E)/2 + 1))
+% Help from: https://www.mathworks.com/matlabcentral/answers/21542-find-divisors-for-a-given-number
+
+if nargin == 0
+    error('No arguments provided. One input argument is required...')
 end
-my_factors = [F(:), G(:)]'
+if isempty(N)
+    my_factors = [];
+elseif isnan(N(1))
+    my_factors = nan;
+elseif ~isscalar(N) || ~isnumeric(N) || ~isreal(N) || N < 1 || fix(N) ~= N || N > flintmax
+    error('Input value must be a real, positive, numeric, integer...')
+
+else
+integers = 1:N;
+divisors = integers(rem(N,integers) == 0);
+divisors_reversed = fliplr(divisors);
+
+% If there's an even number of divisors, use the first half.
+if rem(length(divisors),2) == 0 
+    first_half = divisors(1:length(divisors)/2);
+    second_half = divisors_reversed(1:length(divisors_reversed)/2);
+% If there's an odd number of divisors, use the first half + 1 more.
+else
+    first_half = divisors(1:(length(divisors)/2 + 1));
+    second_half = divisors_reversed(1:(length(divisors_reversed)/2 + 1));
+end
+% Print the list of factors as a 2D array. The transpose is needed to show in row form.
+my_factors = [first_half(:), second_half(:)]'
+end
