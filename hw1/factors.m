@@ -25,22 +25,23 @@ function out=factors(N)
 % Cameron, Sullivan (change this line!)
 % 2019/01/XX (change XX to the date completed)
 
-% Numbers from 1-N
-nums = 1:N;
-divisors = zeros(1,N);
-factos = zeros(1,N);
-counter = 0;
+% potentialFactors = 1:N
+% divisors = N./potentialFactors
+% 
+% % This is the problem. I need to evaluate each element separately without using a for-loop.
+% if floor(divisors) == divisors
+%     disp('factor found')
+%     
+% end
 
-% If the number goes into N evenly, it's a factor.
-floor(N./nums)
-N./nums
-floor(N./nums) == N./nums
-if floor(N./nums) == N./nums
-    divisors = N./nums;
-    factos = N./divisors;
+K = 1:N;
+D = K(rem(N,K) == 0)
+E = fliplr(D)
+if rem(length(D),2) == 0 
+    F = D(1:length(D)/2)
+    G = E(1:length(E)/2)
+else
+    F = D(1:(length(D)/2 + 1))
+    G = E(1:(length(E)/2 + 1))
 end
-nums
-divisors
-factos
-
-end
+my_factors = [F(:), G(:)]'

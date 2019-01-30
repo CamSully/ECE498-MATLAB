@@ -25,21 +25,10 @@ function out=factors(N)
 % Cameron, Sullivan (change this line!)
 % 2019/01/XX (change XX to the date completed)
 
-% Numbers from 1-N
-nums = 1:N;
-divisors = zeros(1,N);
-factos = zeros(1,N);
+potentialFactors = 1:N
+divisors = N./potentialFactors
 
-% If the number goes into N evenly, it's a factor.
-floor(N./nums)
-N./nums
-floor(N./nums) == N./nums
-if floor(N./nums) == N./nums
-    divisors(nums) = N./nums;
-    factos(nums) = N./divisors;
-end
-nums
-divisors
-factos
-
+if floor(divisors) == divisors
+    
+    
 end
