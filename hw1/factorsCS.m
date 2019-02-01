@@ -46,20 +46,11 @@ elseif ~isscalar(N) || ~isnumeric(N) || ~isreal(N) || N < 1 || fix(N) ~= N || N 
 
 % If the input argument is a positive integer, find its factors.
 else
-    integers = 1:N;
-    % Find all of the factors of N and put them in a 1D array. This is the key statement to the whole program. Help from: https://www.mathworks.com/matlabcentral/answers/21542-find-divisors-for-a-given-number
-    divisors = integers(rem(N,integers) == 0);
-    divisors_reversed = fliplr(divisors);
-
-    % If there's an even number of divisors, use each half to create the 2D array to return.
-    if rem(length(divisors),2) == 0 
-       first_half = divisors(1:length(divisors)/2);
-       second_half = divisors_reversed(1:length(divisors_reversed)/2);
-    % If there's an odd number of divisors, use the first half + 1 more to include the middle factors.
-    else
-      first_half = divisors(1:(floor(length(divisors)/2) + 1));
-      second_half = divisors_reversed(1:(floor(length(divisors_reversed)/2) + 1));
-    end
-    % Print the list of factors as a 2D array. The transpose (') is needed to show in row form.
-    out = [first_half(:), second_half(:)]';
+    integers = 1:floor(sqrt(N));
+    % Find all of the factors of N up to sqrt(N) and put them in a 1D array. This is the key statement to the whole program. 
+    % Help from: https://www.mathworks.com/matlabcentral/answers/21542-find-divisors-for-a-given-number
+    lower_divisors = integers(rem(N,integers) == 0);
+    % Find the upper factors that correspond to the lower factors.
+    upper_divisors = N ./ lower_divisors;
+    out = [lower_divisors; upper_divisors];
 end

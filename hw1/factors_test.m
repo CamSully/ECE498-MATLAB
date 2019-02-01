@@ -1,6 +1,9 @@
 % ECE 498 - Cameron Sullivan - HW1 factors_test.m
 % Code that tests the functionality of factorsCS.m
 
+disp('Checkcode output:')
+checkcode factorsCS.m
+
 disp('Testing factors code');
 disp('60')
 factorsCS(60)
@@ -17,20 +20,40 @@ factorsCS(96)
 disp('36')
 factorsCS(36)
 
-% disp('Empty function call')
-% factorsCS()
+try
+    disp('Empty function call')
+    factorsCS()
+catch error
+    disp(error.message)
+end
 
 disp('NaN')
 factorsCS(nan)
 
-% disp('e')
-% factorsCS('e')
+try
+    disp('e')
+    factorsCS('e')
+catch error
+    disp(error.message)
+end
 
-% disp('-2')
-% factorsCS('-2')
+try
+    disp('-2')
+    factorsCS('-2')
+catch error
+    disp(error.message)
+end
 
-% disp('3.92939')
-% factorsCS(3.92939)
+try
+    disp('3.92939')
+    factorsCS(3.92939)
+catch
+    disp(error.message)
+end
 
-% disp('4j')
-% factorsCS(4j)
+try
+    disp('4j')
+    factorsCS(4j)
+catch
+    disp(error.message)
+end
