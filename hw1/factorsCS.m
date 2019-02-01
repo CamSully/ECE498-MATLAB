@@ -1,4 +1,4 @@
-function out=factors(N)
+function out=factorsCS(N)
 % FACTORS All Factors of an Integer
 % FACTORS(N) returns all the factors of the positive integer N.
 % For example:
@@ -23,7 +23,7 @@ function out=factors(N)
 % Rename the function factorsXX where XX is your initials.
 
 % Cameron, Sullivan (change this line!)
-% 2019/01/XX (change XX to the date completed)
+% 2019/01/31 (change XX to the date completed)
 
 % potentialFactors = 1:N
 % divisors = N./potentialFactors
@@ -34,32 +34,32 @@ function out=factors(N)
 %     
 % end
 
-% Help from: https://www.mathworks.com/matlabcentral/answers/21542-find-divisors-for-a-given-number
-
+% Error checking.
 if nargin == 0
     error('No arguments provided. One input argument is required...')
-end
-if isempty(N)
-    my_factors = [];
+elseif isempty(N)
+    out = [];
 elseif isnan(N(1))
-    my_factors = nan;
+    out = nan;
 elseif ~isscalar(N) || ~isnumeric(N) || ~isreal(N) || N < 1 || fix(N) ~= N || N > flintmax
     error('Input value must be a real, positive, numeric, integer...')
 
+% If the input argument is a positive integer, find its factors.
 else
-integers = 1:N;
-divisors = integers(rem(N,integers) == 0);
-divisors_reversed = fliplr(divisors);
+    integers = 1:N;
+    % Find all of the factors of N and put them in a 1D array. This is the key statement to the whole program. Help from: https://www.mathworks.com/matlabcentral/answers/21542-find-divisors-for-a-given-number
+    divisors = integers(rem(N,integers) == 0);
+    divisors_reversed = fliplr(divisors);
 
-% If there's an even number of divisors, use the first half.
-if rem(length(divisors),2) == 0 
-    first_half = divisors(1:length(divisors)/2);
-    second_half = divisors_reversed(1:length(divisors_reversed)/2);
-% If there's an odd number of divisors, use the first half + 1 more.
-else
-    first_half = divisors(1:(length(divisors)/2 + 1));
-    second_half = divisors_reversed(1:(length(divisors_reversed)/2 + 1));
-end
-% Print the list of factors as a 2D array. The transpose is needed to show in row form.
-my_factors = [first_half(:), second_half(:)]'
+    % If there's an even number of divisors, use each half to create the 2D array to return.
+    if rem(length(divisors),2) == 0 
+       first_half = divisors(1:length(divisors)/2);
+       second_half = divisors_reversed(1:length(divisors_reversed)/2);
+    % If there's an odd number of divisors, use the first half + 1 more to include the middle factors.
+    else
+      first_half = divisors(1:(floor(length(divisors)/2) + 1));
+      second_half = divisors_reversed(1:(floor(length(divisors_reversed)/2) + 1));
+    end
+    % Print the list of factors as a 2D array. The transpose (') is needed to show in row form.
+    out = [first_half(:), second_half(:)]';
 end
