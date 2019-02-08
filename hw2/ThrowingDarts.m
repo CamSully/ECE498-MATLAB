@@ -21,7 +21,7 @@
 % No extraneous output to the Command Window.
 
 % Cameron, Sullivan (change this line!)
-% 2019/01/XX (change XX to the date completed)
+% 2019/02/08 (change XX to the date completed)
 
 % This is NOT a function M-file; it is a script M-file
 
@@ -37,35 +37,49 @@ num_points = 10000;
 subplot(1,2,1);
 x_coords = (rand([1 num_points]) * 2) - 1;
 y_coords = (rand([1 num_points]) * 2) - 1;
-scatter(x_coords, y_coords,'.r');
-% hold on;
+scatter(x_coords, y_coords,15,'.r');
+
+
 
 % Plot the circle.
-
 Hrect = rectangle('Position',[-1, -1 2 2],'Curvature',1);
 Hrect.LineWidth = 2;
 title("N = 10000 Darts");
+% Set up the axis ticks to match the example results.
+xticks([-1 -0.5 0 0.5 1]);
 yticks([-1 -0.5 0 0.5 1]);
+% Make the dartboard square to match the example dartboard.
+axis square;
 
-% Pi estimation
-% Find number of darts in the circle.
-% Find number of darts outside the circle.
-% Take ratio and multiply by 4.
+
+
+% Pi estimation algorithm.
+% Calculate the radius between each point and the origin.
 radius = hypot(x_coords, y_coords);
+% Create an array of booleans showing if each point is in the circle (1) or outside the circle (0).
 in_circle = radius <= 1;
+% Use a cumulative sum to show the number of points in the circle from index 1 to n.
 num_in_circle = cumsum(in_circle);
-indices = 1:num_points;
-ratio = num_in_circle ./ indices;
+% Find the ratio of the number of points in the circle to the total number of points (represented by the index number).
+ratio = num_in_circle ./ (1:num_points);
+% The ideal ratio of points is pi/4, so multiply by 4 to estimate pi.
 pi_estimate = ratio * 4;
+
+
 
 % Pi estimation plot
 hold off;
 subplot(1,2,2);
-semilogx(indices, pi_estimate);
+% Plot the pi estimate versus index and a horizontal line showing pi.
+semilogx(indices, pi_estimate, [1,num_points], [pi, pi],'k');
+
+% Set axis limits to match the example plot.
 xlim([20 num_points]);
 ylim([2.5 3.5]);
-line([1,num_points],[pi_estimate(num_points), pi_estimate(num_points)],'color','k');
+
+% Plot the pi symbol with the horizontal line as a label.
 text(num_points + 300, pi, '\pi','fontsize',12);
 xlabel("Dart Number");
+% Generate a title string with the final estimate value of pi.
 graph_title = sprintf('\\pi \\approx %.4f', pi_estimate(num_points));
 title(graph_title);
