@@ -28,3 +28,30 @@
 % Simulate random dart throws.
 % Plot square with circle and points for dart throws.
 % Plot graph of approximated pi value versus dart number.
+
+% Useful functions: rand, hypot, sum, cumsum, subplot, plot, semilogx, axis, title, xlabel, text, sprintf
+close all;
+
+% Plot the randomly generated points on the dartboard.
+x_coords = (rand([1 10000]) * 2) - 1;
+y_coords = (rand([1 10000]) * 2) - 1;
+figure('Position', [10 10 300 300]);
+scatter(x_coords, y_coords,'.r');
+
+hold on;
+
+% Plot the circle.
+Hrect = rectangle('Position',[-1, -1 2 2],'Curvature',1);
+Hrect.LineWidth = 2;
+title("N = 10000 Darts");
+yticks([-1 -0.5 0 0.5 1]);
+
+% Pi estimation
+% Find number of darts in the circle.
+% Find number of darts outside the circle.
+% Take ratio and multiply by 4.
+
+% Pi estimation plot
+% semilogx();
+% xlabel("Dart Number");
+% title('\pi \approx 3.xxx');
