@@ -31,16 +31,17 @@
 
 % Useful functions: rand, hypot, sum, cumsum, subplot, plot, semilogx, axis, title, xlabel, text, sprintf
 close all;
+num_points = 10000;
 
 % Plot the randomly generated points on the dartboard.
-x_coords = (rand([1 10000]) * 2) - 1;
-y_coords = (rand([1 10000]) * 2) - 1;
-figure('Position', [10 10 300 300]);
+subplot(1,2,1);
+x_coords = (rand([1 num_points]) * 2) - 1;
+y_coords = (rand([1 num_points]) * 2) - 1;
 scatter(x_coords, y_coords,'.r');
-
-hold on;
+% hold on;
 
 % Plot the circle.
+
 Hrect = rectangle('Position',[-1, -1 2 2],'Curvature',1);
 Hrect.LineWidth = 2;
 title("N = 10000 Darts");
@@ -50,8 +51,21 @@ yticks([-1 -0.5 0 0.5 1]);
 % Find number of darts in the circle.
 % Find number of darts outside the circle.
 % Take ratio and multiply by 4.
+radius = hypot(x_coords, y_coords);
+in_circle = radius <= 1;
+num_in_circle = cumsum(in_circle);
+indices = 1:num_points;
+ratio = num_in_circle ./ indices;
+pi_estimate = ratio * 4;
 
 % Pi estimation plot
-% semilogx();
-% xlabel("Dart Number");
-% title('\pi \approx 3.xxx');
+hold off;
+subplot(1,2,2);
+semilogx(indices, pi_estimate);
+xlim([20 num_points]);
+ylim([2.5 3.5]);
+line([1,num_points],[pi_estimate(num_points), pi_estimate(num_points)],'color','k');
+text(num_points + 300, pi, '\pi','fontsize',12);
+xlabel("Dart Number");
+graph_title = sprintf('\\pi \\approx %.4f', pi_estimate(num_points));
+title(graph_title);
