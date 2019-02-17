@@ -68,10 +68,9 @@ pi_estimate = ratio * 4;
 
 
 % Pi estimation plot
-hold off;
 subplot(1,2,2);
 % Plot the pi estimate versus index and a horizontal line showing pi.
-semilogx(indices, pi_estimate, [1,num_points], [pi, pi],'k');
+semilogx(1:num_points, pi_estimate, [1,num_points], [pi, pi],'k');
 
 % Set axis limits to match the example plot.
 xlim([20 num_points]);
