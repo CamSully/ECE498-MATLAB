@@ -31,36 +31,33 @@ elseif ~strcmpi(str, 'max') && ~strcmpi(str, 'min')
 
 % If the input is acceptable, find max or min values.
 else
-    % Obtain an array of the indices where the value of the array changes.
-    differences = diff(x);
-    change_indices = find(differences ~= 0)
+    % Whatever input array is provided, convert it to a single-row vector.
+    x = reshape(x,1,[]);
 
-    % If all of the values in the array are the same value, return the first value.
-    if (isempty(change_indices))
-        idx = x(1);
-        return
-    end
-
-    % To determine if the first or last value is a max or min, pad the first and last values with the first value with a non-zero slope.
-    % e.g. [1 2] becomes [2 1 2 1] to allow for easy calculation that index 1 is a minimum and index 2 is a maximum.
-    first_value = x(change_indices(1) + 1)
-    last_value = x(change_indices(end));
-    % Shift the array right one and add the first value on, add the last value on the end.
-    % Obtained from https://www.mathworks.com/matlabcentral/answers/59432-how-to-shift-arrays-to-the-right
-    x = [first_value, x(1:end), last_value]
-
-
-    % Recalculate the differences with the newly-appended array.
-    differences = diff(x)
-    % Locate the max and min by finding the second derivative. The > 0 is necessary to prevent double-calculation of a maxima or minima.
-    second_deriv = diff(differences>0)
-
-    % If the user enters 'min', find the minimum points, where the second derivative is greater than 0.
+    % If the user enters 'min', find the minimum points, where the second derivative is positive.
     if (str == 'min')
+        % Shift the array right one and add flintmax onto the beginning and end. +flintmax allows minima to be located.
+        % Obtained from https://www.mathworks.com/matlabcentral/answers/59432-how-to-shift-arrays-to-the-right
+        x = [flintmax, x(1:end), flintmax];
+        
+        % Recalculate the differences with the newly-appended array.
+        differences = diff(x);
+        
+        % Locate the max and min by finding the second derivative. The > 0 is necessary to prevent double-calculation of a maxima or minima.
+        second_deriv = diff(differences>0);
+        
         idx = find(second_deriv > 0);
     end
-    % If the user enters 'max', find the minimum points, where the second derivative is less than 0.
+    
+    % If the user enters 'max', find the maximum points, where the second derivative is negative.
     if (str == 'max')
+        % Add -flintmax to the beginning and end of the array to allow maxima to be located at the first and last index.
+        x = [-flintmax, x(1:end), -flintmax];
+        differences = diff(x);
+        
+        % Locate the max and min by finding the second derivative. The > 0 is necessary to prevent double-calculation of a maxima or minima.
+        second_deriv = diff(differences>0);
+        
         idx = find(second_deriv < 0);
     end
 end
