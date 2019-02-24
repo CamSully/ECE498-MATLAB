@@ -35,7 +35,7 @@ else
     x = reshape(x,1,[]);
 
     % If the user enters 'min', find the minimum points, where the second derivative is positive.
-    if (str == 'min')
+    if (str == "min")
         % Shift the array right one and add flintmax onto the beginning and end. +flintmax allows minima to be located.
         % Obtained from https://www.mathworks.com/matlabcentral/answers/59432-how-to-shift-arrays-to-the-right
         x = [flintmax, x(1:end), flintmax];
@@ -50,9 +50,9 @@ else
     end
     
     % If the user enters 'max', find the maximum points, where the second derivative is negative.
-    if (str == 'max')
+    if (str == "max")
         % Add -flintmax to the beginning and end of the array to allow maxima to be located at the first and last index.
-        x = [-flintmax, x(1:end), -flintmax];
+        x = [-5, x(1:end), -5];
         differences = diff(x);
         
         % Locate the max and min by finding the second derivative. The > 0 is necessary to prevent double-calculation of a maxima or minima.

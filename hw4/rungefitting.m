@@ -62,15 +62,17 @@ yi = runge(xi);
 % title(['Maximum Polynomial Fitting Error = ' sprintf('%6.4f',maxfiterr)])
 
 %% here is an example trial (Code Section 2)
+close all;
 % you get to choose the data points x and the polynomial order n
 
+% for N = 26:150
 % try these points between -1 and 1
-N = 13;
+N = 100;
 x = linspace(-1,1,N);
 y = runge(x);
 
-% try a 5th order polynomial
-n = 12;
+% try a nth order polynomial
+n = 26;
 p = polyfit(x,y,n);
 % The data points x and polynomial order n are entirely up to you.
 % The data points x need not be uniformly distributed between -1 and 1.
@@ -92,13 +94,17 @@ yp = polyval(p,xi);
 fiterr = yi-yp;
 
 % the maximum absolute error is
-maxfiterr = max(abs(fiterr));
+format long
+N
+maxfiterr = max(abs(fiterr))
+% end
 
 % plot the two interpolations on one subplot and the error on a second
 subplot(2,1,1)
 plot(xi,yi,xi,yp)
 xlabel x
-title('Runge Function and Polynomial Fit')
+title('Runge Function and Polynomial Fit');
+legend('Runge function', 'Polynomial fit');
 
 subplot(2,1,2)
 plot(xi,fiterr)
