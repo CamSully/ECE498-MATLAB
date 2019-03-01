@@ -6,39 +6,28 @@
 %
 % Once you have 'data' loaded, you can plot the function using
 
-% This does not work!
-% data = load('ECE498Data.mat');
-% whos
+% Hanselman's .mat file automatically create variables, so I do not assign the load result to anything!
+close all;
+clc;
+
+load('ECE498Data.mat');
 
 t = data(:,1);
 y = data(:,2);
 disp("Length of input data: " + length(t));
 
 plot(t,y);
+hold on;
 
-% Test data
-A = 1;
-omega = 1;
-theta = 1;
-B = 1;
-
-xstar = [A;omega;theta;B];
-timed = linspace(0,0.1,433);
-yd = A*cos(omega*t + theta) + B;
-
-% Initial guess
-x0 = zeros(1,4);
-
-fitfun1 = @(x) fitfun2(x,timed,yd);
+fun = @(x,t,y) norm(x(1)*cos(x(2)*t + x(3)) + x(4) - y);
+fun1 = @(x) fun(x,t,y);
 
 options = [];
+x0 = [0,0,0,0];
+x = fminsearch(fun1,x0,options)
 
-x = fminsearch(fitfun1,x0,options);
-
-[enorm,p] = fitfun1(x);
-enorm
-pout = [p pstar]
-xout = [x xstar]
+y_fit = x(1)*cos(x(2)*t + x(3)) + x(4) - y;
+plot(t,y_fit);
 
 % This week's task is to find the values of A, omega, theta and B that best
 % fits the data where
