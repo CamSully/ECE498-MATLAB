@@ -23,7 +23,6 @@
 % Useful functon: fminsearch
 
 close all;
-clc;
 
 % Hanselman's .mat file automatically create variables, so I do not assign the load result to anything!
 load('ECE498Data.mat');
@@ -32,24 +31,33 @@ t = data(:,1);
 y = data(:,2);
 disp("Length of input data: " + length(t));
 
+% This function is used to show the form of the desired waveform.
+% In this case, y = Acos(omegat*t + theta) + B.
 fun = @(x,t,y) norm(x(1)*cos(x(2)*t + x(3)) + x(4) - y);
+% The fminsearch function requires a fit that only takes x.
+% This function call provides fminsearch the required function, and uses t and y to fit the data.
 fun1 = @(x) fun(x,t,y);
 
+% I didn't use any options for this assignment.
 options = [];
 
 % Default 0 guess.
 % x0 = [0,0,0,0];
 % First rough guess from looking at data.
-% x0 = [7,384,0,4];
-% Second guess based on output from first guess.
-x0 = [6.0962, 377.9243, -0.017609, 3.1543];
+% x0 = [7.5,314,0,3];
+% Second guess from using cursors to calculate values.
+% x0 = [6.50,369.2,0,3.28];
+% Final guess based on output from second guess.
+x0 = [6.0962, 377.9243, -0.01761, 3.1543];
 
+% Use fminsearch to approximate A, omega, theta, and B to fit the data to a cosine waveform.
 x = fminsearch(fun1,x0,options);
 disp("A: " + x(1));
-disp("B: " + x(2));
-disp("C: " + x(3));
-disp("D: " + x(4));
+disp("omega: " + x(2));
+disp("theta: " + x(3));
+disp("B: " + x(4));
 
+% Obtain points for the fit cosine wave.
 y_fit = x(1)*cos(x(2)*t + x(3)) + x(4);
 
 % Plot original signal and cosine fit signal.
@@ -69,4 +77,7 @@ title('Fit Error versus Time');
 ylabel('Fit error');
 xlabel('Time');
 
-% NEED TO ADD ERROR NORM MEASUREMENT AS SHOWN IN BOOK
+% Normal error indicates the overall success of the fit. 
+% The objective is to minimize enorm.
+enorm = fun1(x);
+disp("enorm: " + enorm);
