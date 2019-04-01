@@ -37,35 +37,27 @@ clc;
 % Find zero crossings
 fun = @zerocrossings;
 
-x = linspace(-10,10,500);
-zero_func = zeros(500, 1);
+% x = linspace(-10,10,500);
+x = linspace(-10, 10, 10000);
+zero_func = zeros(10000, 1);
 y = zerocrossings(x);
 
 xzero(1) = fzero(fun, -4.549);
-% This zero crossing is within the only linear region of the graph, caused by a discontinuity in the function!
-% Use interpolation to find the equation for the linear region between points.
-xi = [-4.148 -4.108];
-yinterp = interp1(x,y,xi,'linear');
-myFit = polyfit(xi, yinterp, 1);
-% Use an anonymous function to find xzero based on the linear interpolation function.
-myFunc = @(input) polyval(myFit, input);
 
 subplot(2,1,1);
 plot(x, zero_func, 'k');
 hold on;
-% plot(xi, yinterp, 'linewidth', 2);
-% Using interpolation provides the correct x-value, but wrong y-value.
+% fzero() provides the correct x-value, but wrong y-value.
 % The y-value seems to be a continuation of the exponential line.
-xzero(2) = fzero(myFunc, -4.145);
-% Using the regular function provides the incorrect X & Y values.
-% xzero(2) = fzero(fun, -4.145);
+xzero(2) = fzero(fun, -4.124);
 
 xzero(3) = fzero(fun, -3.507);
 xzero(4) = fzero(fun, -2.826);
 xzero(5) = fzero(fun, 2.385);
 xzero(6) = fzero(fun, 3.106);
-xzero(7) = fzero(fun, 3.828);
-xzero(8) = fzero(fun, 5.07)
+xzero(7) = fzero(fun, 3.25);
+xzero(8) = fzero(fun, 3.828);
+xzero(9) = fzero(fun, 5.07)
 yzero = zerocrossings(xzero)
 
 % subplot(2,1,1);
