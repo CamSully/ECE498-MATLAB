@@ -1,3 +1,4 @@
+% ECE 498 - Cameron Sullivan - HW7 findZeroCrossings.m
 % find zero crossings
 
 % your task in this problem is to find all the places in the range
@@ -31,22 +32,26 @@
 
 % do your work in this M file.
 
-% close all;
-clc;
+
 
 % Create an inline function based on Hanselman's function. This can be passed in to fzero().
 fun = @zerocrossings;
 
-x1 = linspace(-10, -4.15, 500);
-y1 = zerocrossings(x1);
-x_discontinuity = linspace(-4.15, -4.1, 1000);
-y_discontinuity = zerocrossings(x_discontinuity);
-x2 = linspace(-4.1, 10, 500);
-y2 = zerocrossings(x2);
+x = zeros(2000, 1);
+% Make the first 500 points of x from -10 to -4.15.
+x(1:500) = linspace(-10, -4.15, 500);
+% "Zoom in" on the discontinuity by taking 1,000 points on the rough interval of the discontinuity.
+x(501:1500) = linspace(-4.15, -4.1, 1000);
+% Make the last 500 points from -4.1 to 10.
+x(1501:2000) = linspace(-4.1, 10, 500);
+y = zerocrossings(x);
 
+% Find zero crossings using fzero().
+% I visually approximated the rough location of each zero.
+xzero = zeros(9, 1);
 xzero(1) = fzero(fun, -4.549);
-% fzero() provides the correct x-value, but wrong y-value.
-% The y-value seems to be a continuation of the exponential line.
+% For the second zero: fzero() provides a close x-value (off by only 0.00001), but the wrong y-values.
+% This is caused by the discontinuity. The function cannot possibly evaluate to zero at the discontinuity.
 xzero(2) = fzero(fun, -4.124);
 xzero(3) = fzero(fun, -3.507);
 xzero(4) = fzero(fun, -2.826);
@@ -55,18 +60,26 @@ xzero(6) = fzero(fun, 3.106);
 xzero(7) = fzero(fun, 3.25);
 xzero(8) = fzero(fun, 3.828);
 xzero(9) = fzero(fun, 5.07)
+
 yzero = zerocrossings(xzero)
 
+% First subplot: zerocrossings function, zero-crossing points approximated by fzero().
 subplot(2,1,1);
-% plot(x,y);
-% scatter(x,y)
-x_zero = linspace(-10, 10, 1000);
-zero_func = zeros(1000, 1);
-plot(x_zero, zero_func, 'k');
-hold on;
-plot(x_discontinuity, y_discontinuity);
-plot(xzero,yzero,'ko');
-% plot(x1,y1,'b',x_discontinuity,y_discontinuity,'b',x2,y2,'b',xzero,yzero,'ko')
+% scatter(x,y);
+plot(x,y, xzero,yzero,'ko','linewidth',2);
+set(gca, 'fontsize', 20);
+grid on;
+title('Zerocrossings Function & Approximated Zero Crossings');
+ylabel('Y');
+xlabel('X');
 
-% subplot(2,1,2);
-% plot(xzero,yzero,'o');
+% Second subplot: only the fzero() approximated zero-crossings.
+subplot(2,1,2);
+plot(xzero, yzero, 'k.', 'markersize', 25);
+grid on;
+set(gca, 'fontsize', 20);
+title('Approximated Zero Crossings');
+ylabel('Y');
+xlabel('X');
+xlim([-10 10]);
+ylim([-0.25 1.5]);
