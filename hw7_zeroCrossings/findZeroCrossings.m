@@ -38,12 +38,9 @@
 fun = @zerocrossings;
 
 x = zeros(2000, 1);
-% Make the first 500 points of x from -10 to -4.15.
-x(1:500) = linspace(-10, -4.15, 500);
+% Make the first 500 points of x from -10 to -4.15, and the last 500 points from -4.1 to 10.
 % "Zoom in" on the discontinuity by taking 1,000 points on the rough interval of the discontinuity.
-x(501:1500) = linspace(-4.15, -4.1, 1000);
-% Make the last 500 points from -4.1 to 10.
-x(1501:2000) = linspace(-4.1, 10, 500);
+x = [linspace(-10, -4.15, 500) linspace(-4.15, -4.1, 1000) linspace(-4.1, 10, 500)];
 y = zerocrossings(x);
 
 % Find zero crossings using fzero().
