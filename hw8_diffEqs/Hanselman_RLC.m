@@ -1,21 +1,26 @@
 % Series RLC circuit Solution
 
 % Enter Resistance R below
-R = 60; % semicolon tells MATLAB to NOT spit this value out
+% R = 60;
+R = 1.792;
 
 % Enter Inductance L below
-L = 0.1;
+% L = 0.1;
+L = 0.014;
 
 % Enter Capacitance C below
-C = 125e-6;
+% C = 125e-6;
+C = 67.99e-6;
 
 % Enter Initial Current I(0-) below
-Io = 0.2;
+% Io = 0.2;
+Io = 0;
 
 % Enter Initial Capacitor Voltage Vc(0-) below
 % This voltage polarity is defined so that
 % PSC = True with respect to the current i
-Vco = -12;
+% Vco = -12;
+Vco = -50;
 
 % Choose Plot Type
 % 0 for simple
