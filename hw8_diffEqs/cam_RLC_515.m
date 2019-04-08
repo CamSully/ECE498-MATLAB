@@ -1,17 +1,18 @@
 % ECE 498 - Cameron Sullivan - HW8 Series RLC Circuit Solver Using ode45()
+% This script solves the 210 book problem 5.15.
 
 % Component values.
 R = 1.792;
 L = 0.014;
 C = 67.99e-6;
 
-% INITIAL CONDITIONS
+% Initial conditions - calculated in ECE 210 HW
 I_0 = 0;
 V_C0 = -50;
 % Initial conditions in column form.
 x0 = [I_0; V_C0];
 
-% Evaluate RLC circuit over a timespan of 25 ms.
+% Evaluate RLC circuit over a timespan of 80 ms.
 time_span = [0 80e-3];
 
 % Anonymous function for evaulating the voltage and current equations for the series RLC circuit.
@@ -27,7 +28,7 @@ subplot(2,1,1);
 yyaxis left;
 plot(t,x(:,1),'linewidth',2);
 set(gca,'fontsize',20);
-title('Series RLC: R = 60 \Omega, L = 100 mH, C = 125 \muF');
+title('Series RLC: R = 1.729 \Omega, L = 14 mH, C = 67.99 \muF');
 ylabel('Current, A');
 yyaxis right;
 plot(t,x(:,2),'linewidth',2);

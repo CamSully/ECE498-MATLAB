@@ -5,7 +5,7 @@ R = 60;
 L = 0.1;
 C = 125e-6;
 
-% INITIAL CONDITIONS
+% Initial conditions - calculated in ECE 210 HW
 % Initial current is 200 mA.
 I_0 = 200e-3;
 % Initial cap voltage is -12 V.
