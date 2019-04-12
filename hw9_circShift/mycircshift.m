@@ -39,8 +39,8 @@ function Y = mycircshift(A,K)
 %        6  4  5
 %        9  7  8
 
-% Last Name, First Name
-% Year/Month/Day
+% Sullivan, Cameron
+% 2019/4/Day
 
 % Be sure to include appropriate error checking on the input arguments
 % Are they all there? Do they have appropriate dimensions and acceptable
@@ -50,3 +50,28 @@ function Y = mycircshift(A,K)
 
 % dimensions do not change, i.e., size(Y) = size(A)
 
+
+
+% If the user attempts to shift a length further than the length of the array, 
+% decrease the shift value to be less than the array.
+% This will cause an equivalent shifting operation.
+if (K < -length(A))
+    K = K + length(A);
+end
+if (K > length(A))
+    K = K - length(A);
+end
+
+% Allocate space for the shifted array.
+final_array = zeros(1, length(A));
+
+% Get the indices of the input array.
+indices = 1:length(A);
+% Add the shift number to each index.
+new_indices = indices + K;
+% If the new index is below 1, circularly shift it to the end of the array.
+new_indices(new_indices < 1) = new_indices(new_indices < 1) + length(A);
+% If the new index is above the max index, circularly shift it to the beginning of the array.
+new_indices(new_indices > length(A)) = new_indices(new_indices > length(A)) - length(A);
+% Create the shifted array by placing the original A values in the new indices.
+final_array(new_indices) = A(indices)
