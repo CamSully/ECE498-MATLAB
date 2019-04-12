@@ -6,7 +6,7 @@ R = 1.792;
 L = 0.014;
 C = 67.99e-6;
 
-% Initial conditions - calculated in ECE 210 HW
+% Initial conditions - calculated in ECE 210 HW from 10-13-17.
 I_0 = 0;
 V_C0 = -50;
 % Initial conditions in column form.

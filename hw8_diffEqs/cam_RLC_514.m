@@ -1,11 +1,12 @@
 % ECE 498 - Cameron Sullivan - HW8 Series RLC Circuit Solver Using ode45()
+% This script solves the 210 book problem 5.14.
 
 % Component values.
 R = 60;
 L = 0.1;
 C = 125e-6;
 
-% Initial conditions - calculated in ECE 210 HW
+% Initial conditions - calculated in ECE 210 HW from 10-13-17.
 % Initial current is 200 mA.
 I_0 = 200e-3;
 % Initial cap voltage is -12 V.
