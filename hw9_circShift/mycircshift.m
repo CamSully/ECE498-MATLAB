@@ -50,6 +50,23 @@ function Y = mycircshift(A,K)
 
 % dimensions do not change, i.e., size(Y) = size(A)
 
+% User must provide exactly two arguments.
+if nargin == 0 || nargin == 1 || nargin > 2
+    error('Not enough input arguments provided. Two arguments are required...');
+end
+
+% Array error checking.
+if isempty(A) || length(A) == 1
+    error('Input matrix A must have at least two elements.');
+end
+if isnan(A) || ~isnumeric(A) || ~isreal(A) || fix(A) ~= A || A > flintmax
+    error('Input value must be a real, numeric, integer...')
+end
+
+% Shift value error checking.
+if isnan(K) || ~isscalar(K) || ~isnumeric(K) || ~isreal(K) || K < 1 || fix(K) ~= K || K > flintmax
+    error('Input value must be a real, positive, numeric, integer...')
+end
 
 A_size = size(A);
 num_rows = A_size(1);
