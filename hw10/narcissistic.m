@@ -12,6 +12,6 @@ function out=narcissistic(D)
 % http://mathworld.wolfram.com/NarcissisticNumber.html
 % https://en.wikipedia.org/wiki/Narcissistic_number
 
+% Error checking
 
-
-
+for i = 10^(D-1):10^(D)-1
