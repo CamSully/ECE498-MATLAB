@@ -15,3 +15,5 @@ function out=narcissistic(D)
 % Error checking
 
 for i = 10^(D-1):10^(D)-1
+    
+end

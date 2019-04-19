@@ -22,12 +22,15 @@ if length(in) ~= 1 || isnan(in) || ~isscalar(in) || ~isnumeric(in) || ~isreal(in
     error('Input value must be a single real, positive, numeric, integer...')
 end
 
-num_digits = 0;
+digit_counter = 1;
 % Divide the input integer by 10 until the value is 0.
 while (in >= 1)
+    % The current digit is the floor of the remainder of the input value divided by 10.
+    digits(digit_counter) = floor(mod(in,10));
+    % Divide the input number by 10 to determine the next-highest digit.
     in = in / 10;
     % Count each division by 10 as one digit of the input integer.
-    num_digits = num_digits + 1;
+    digit_counter = digit_counter + 1;
 end
 
-out = num_digits;
+out = flip(digits);
