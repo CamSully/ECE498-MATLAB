@@ -18,19 +18,26 @@ function out=getdigits(in)
 if nargin == 0 || nargin > 1
     error('Incorrect number of arguments provided. One input argument is required...')
 end
-if length(in) ~= 1 || isnan(in) || ~isscalar(in) || ~isnumeric(in) || ~isreal(in) || in < 1 || fix(in) ~= in || in > flintmax
+if length(in) ~= 1 || isnan(in) || ~isscalar(in) || ~isnumeric(in) || ~isreal(in) || fix(in) ~= in || in > flintmax
     error('Input value must be a single real, positive, numeric, integer...')
 end
 
-digit_counter = 1;
+digit_index = 1;
+
+% Deal with the zero case independently.
+if (in == 0)
+    out = 0;
+    return
+end
+
 % Divide the input integer by 10 until the value is 0.
 while (in >= 1)
     % The current digit is the floor of the remainder of the input value divided by 10.
-    digits(digit_counter) = floor(mod(in,10));
+    digits(digit_index) = floor(mod(in,10));
     % Divide the input number by 10 to determine the next-highest digit.
     in = in / 10;
     % Count each division by 10 as one digit of the input integer.
-    digit_counter = digit_counter + 1;
+    digit_index = digit_index + 1;
 end
 
 out = flip(digits);
