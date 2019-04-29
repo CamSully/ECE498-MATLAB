@@ -1,18 +1,19 @@
 function out=getdigits(in)
-% ADD MORE HELP TEXT! #################################################
 %GETDIGITS returns digits from a scalar integer value.
 % Y = GETDIGITS(X) returns the digits in integer X in the row vector Y.
-%
 % Fractional portions in X are ignored.
 %
-% Example: GETDIGITS(25) returns [2 5]
+% Examples: GETDIGITS(25) returns [2 5]
 %          GETDIGITS(907) returns [9 0 7]
 %          GETDIGITS(pi) returns an error
 %          GETDIGITS(-10) returns an error
-
-% make sure to return an error is not a positive scalar real integer value.
-% you may NOT use num2str, str2num, or int2str
-% roll your own code if you need to do these conversions
+%
+% Input Arguments
+% X is the number for which the digits will be returned.
+% The maximum acceptable value of X is flintmax.
+% An error is returned when X is not a positive scalar real integer value.
+%
+% num2str, str2num, and int2str are not used in this function.
 
 % Input error checking.
 if nargin == 0 || nargin > 1
@@ -22,6 +23,8 @@ if length(in) ~= 1 || isnan(in) || ~isscalar(in) || ~isnumeric(in) || ~isreal(in
     error('Input value must be a single real, positive, numeric, integer...')
 end
 
+% The maximum number of digits in a number less than flintmax is 16.
+digits = zeros(1, 16);
 digit_index = 1;
 
 % Deal with the zero case independently.
@@ -40,4 +43,7 @@ while (in >= 1)
     digit_index = digit_index + 1;
 end
 
+% Remove the extra zeros from the array of the digits.
+digits(digit_index:end) = [];
+% The digits are stored in reverse order, so they need to be flipped for the final output.
 out = flip(digits);
